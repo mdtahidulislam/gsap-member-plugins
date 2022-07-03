@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSAP-ScrollToTrigger</title>
+    <style>
+        header, footer, main {
+            text-align: center;
+        }
+        .section {
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+        }
+        .section-1 {
+            background-color: #2c7ad2;
+        }
+        .section-2 {
+            background-color: #e77614;
+        }
+        .section-3 {
+            background-color: #cf3535;
+        }
+        .section-4 {
+            background-color: green;
+        }
+        .section-5 {
+            background-color: gray;
+        }
+.line {
+  width: 100%;
+  max-width: 98%;
+  height: 8px;
+  margin: 0 0 10px 0;
+  position: relative;
+  display: inline-block;
+  background-color: rgba(255,255,255,1);
+  transform: scaleX(0);
+}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>toggleActions</h1>
+        <p>By default, ScrollTrigger simply plays the linked animation when the start scroll position is hit, but it can perform any of the following actions at any of the four toggle points: play, pause, resume, reverse, complete, restart, reset, or none.</p>
+    </header>
+    <main class="main">
+        <section class="section section-1">
+            <span class="line line-blue"></span>
+            <p>This line's animation will play when it enters the viewport, and then take no other actions after that. It's the default toggleActions: "play none none none"</p>
+        </section>
+        <section class="section section-2">
+            <span class="line line-orange"></span>
+            <p>This line's animation will restart when it enters the viewport then pause when it leaves, resume when scrolled back into view, and finally pause when it leaves again (scrolled all the way back). toggleActions: "restart pause resume pause"</p>
+        </section>
+        <section class="section section-3">
+            <span class="line line-red"></span>
+            <p>This line's animation will play when it enters the viewport, complete when it leaves, reverse when you scroll it backwards into the viewport again, and reset when you go all the way back past the beginning. toggleActions: "play complete reverse reset"</p>
+        </section>
+        <section class="section section-4">
+            <span class="line line-green"></span>
+            <p>This line's animation will play when its top edge hits the center of the viewport (start: "top center"), then it will pause 100px from the top of the viewport (end: "top 100px"). Scrolling backward past that point will resume, and scrolling all the way back past center will pause again. The tween also has an infinite repeat. toggleActions: "play pause resume pause"</p>
+        </section>
+        <section class="section section-5">
+            <h3>Done !</h3>
+        </section>
+    </main>
+    <footer>
+        <h3>All rights reserved</h3>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        
+
+        // add scrolltrigger to entire timeline
+        //let tl = gsap.timeline();
+        // create tween
+        gsap.to( '.line-blue', {
+            duration: 5, 
+            scaleX: 1,
+            transformOrigin: 'left center', 
+            scrollTrigger: {
+                trigger: '.section-1',
+                start: 'top center',
+                end: 'bottom center',
+                toggleActions: 'play none none none',
+                //markers: true
+            }
+        } );
+        gsap.to( '.line-orange', {
+            duration: 5, 
+            scaleX: 1,
+            transformOrigin: 'left center', 
+            scrollTrigger: {
+                trigger: '.line-orange',
+                start: 'top bottom',
+                end: 'bottom top',
+                toggleActions: 'restart pause resume pause',
+            }
+        } );
+        gsap.to( '.line-red', {
+            duration: 5, 
+            scaleX: 1,
+            transformOrigin: 'left center', 
+            repeat: -1,
+            scrollTrigger: {
+                trigger: '.line-red',
+                start: 'top bottom',
+                end: 'bottom top',
+                toggleActions: 'play complete reverse reset',
+            }
+        } );
+        gsap.to( '.line-green', {
+            duration: 5, 
+            scaleX: 1,
+            transformOrigin: 'left center', 
+            repeat: -1,
+            scrollTrigger: {
+                trigger: '.line-green',
+                start: 'top center',
+                end: 'top 100',
+                toggleActions: 'play pause resume pause'
+            }
+        } );
+    </script>
+
+</body>
+</html>
